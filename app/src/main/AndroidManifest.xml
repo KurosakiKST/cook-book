@@ -11,7 +11,8 @@
         android:theme="@style/Theme.CookBook">
         <activity
             android:name=".view.activities.AddUpdateDishesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.CookBook.NoActionBar"/>
         <activity
             android:name=".view.activities.SplashActivity"
             android:exported="true"
