@@ -9,12 +9,12 @@
     <color name="white">#FFFFFFFF</color>
 
     //custom colors
-    <color name="primaryColor">#ffa726</color>
-    <color name="primaryLightColor">#ffd95b</color>
-    <color name="primaryDarkColor">#c77800</color>
-    <color name="secondaryColor">#bbdefb</color>
-    <color name="secondaryLightColor">#eeffff</color>
-    <color name="secondaryDarkColor">#8aacc8</color>
+    <color name="primaryColor">#fb5858</color>
+    <color name="primaryLightColor">#ff8b85</color>
+    <color name="primaryDarkColor">#c21d2f</color>
+    <color name="secondaryColor">#f9bd72</color>
+    <color name="secondaryLightColor">#ffefa2</color>
+    <color name="secondaryDarkColor">#c38d44</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
 </resources>
