@@ -7,6 +7,6 @@ import com.kyawsithu.cookbook.R
 class AddUpdateDishesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_update)
+        setContentView(R.layout.activity_add_update_dishes)
     }
 }
