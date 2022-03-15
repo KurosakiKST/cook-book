@@ -12,7 +12,8 @@
         <activity
             android:name=".view.activities.AddUpdateDishesActivity"
             android:exported="false"
-            android:theme="@style/Theme.CookBook.NoActionBar"/>
+            android:theme="@style/Theme.CookBook.NoActionBar"
+            android:configChanges="orientation"/>
         <activity
             android:name=".view.activities.SplashActivity"
             android:exported="true"
