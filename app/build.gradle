@@ -50,7 +50,10 @@ dependencies {
 
     //sdp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
-    
+
+    //dexter for permission
+    implementation 'com.karumi:dexter:6.2.3'
+
     //testing
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
