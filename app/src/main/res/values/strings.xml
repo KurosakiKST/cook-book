@@ -18,4 +18,16 @@
     <string name="title_select_image_action">Select Image Action</string>
     <string name="lbl_camera">Camera</string>
     <string name="lbl_gallery">Gallery</string>
+
+    <string name = "title_select_dish_type">SELECT DISH TYPE</string>
+    <string name = "title_select_dish_category">SELECT DISH CATEGORY</string>
+    <string name = "title_select_dish_cooking_time">SELECT DISH COOKING TIME IN MINUTES</string>
+
+    <string name = "err_msg_select_dish_image">Select Dish Image</string>
+    <string name = "err_msg_enter_dish_title">Enter Dish Title</string>
+    <string name = "err_msg_select_dish_type">Select Dish Type</string>
+    <string name = "err_msg_select_dish_category">Select Dish Category</string>
+    <string name = "err_msg_enter_dish_ingredients">Enter Dish Ingredients</string>
+    <string name = "err_msg_select_dish_cooking_time">Select Dish Cooking Time</string>
+    <string name = "err_msg_enter_dish_cooking_directions">Enter Cooking Instructions</string>
 </resources>

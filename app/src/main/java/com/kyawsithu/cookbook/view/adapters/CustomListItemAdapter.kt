@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kyawsithu.cookbook.databinding.ItemCustomListBinding
+import com.kyawsithu.cookbook.view.activities.AddUpdateDishesActivity
 
 class CustomListItemAdapter(
         private val activity : Activity,
@@ -28,6 +29,13 @@ class CustomListItemAdapter(
     {
         val item = listItems[position]
         holder.tvText.text = item
+
+        holder.itemView.setOnClickListener{
+            if(activity is AddUpdateDishesActivity){
+                activity.selectedListItem(item, selection)
+            }
+        }
+
     }
 
     override fun getItemCount() : Int
