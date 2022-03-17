@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Git Projects/KST Projects/Android Training/cook-book/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="app/src/main/res/layout/dialog_custom_list.xml" value="0.6293604651162791" />
+        <entry key="app/src/main/res/layout/item_custom_list.xml" value="0.19628286491387126" />
       </map>
     </option>
   </component>
