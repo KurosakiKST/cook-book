@@ -20,6 +20,7 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -134,15 +135,25 @@ class AddUpdateDishesActivity : AppCompatActivity(), View.OnClickListener {
             if(requestCode == CAMERA){
                 data?.extras?.let{
                     val thumbnail: Bitmap = data.extras!!.get("data") as Bitmap
-                    addUpdateDishesBinding.ivDishImage.setImageBitmap(thumbnail)
-                    addUpdateDishesBinding.ivAddDishImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
+                    //addUpdateDishesBinding.ivDishImage.setImageBitmap(thumbnail)
+                    Glide.with(this)
+                            .load(thumbnail)
+                            .centerCrop()
+                            .into(addUpdateDishesBinding.ivDishImage)
+                    addUpdateDishesBinding.ivAddDishImage.setImageDrawable(
+                        ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
                 }
             }
             else if(requestCode == GALLERY){
                 data?.let{
                     val selectedPhotoURI = data.data
-                    addUpdateDishesBinding.ivDishImage.setImageURI(selectedPhotoURI)
-                    addUpdateDishesBinding.ivAddDishImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
+                    //addUpdateDishesBinding.ivDishImage.setImageURI(selectedPhotoURI)
+                    Glide.with(this)
+                            .load(selectedPhotoURI)
+                            .centerCrop()
+                            .into(addUpdateDishesBinding.ivDishImage)
+                    addUpdateDishesBinding.ivAddDishImage.setImageDrawable(
+                        ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
                 }
             }else if(requestCode == Activity.RESULT_CANCELED){
                 Log.e("Cancel", "Image choosing cancel")
