@@ -2,6 +2,7 @@ package com.kyawsithu.cookbook.model.database
 
 import androidx.annotation.WorkerThread
 import com.kyawsithu.cookbook.model.entites.CookBook
+import kotlinx.coroutines.flow.Flow
 
 class CookBookRepository(private val cookBookDao : CookBookDao)
 {
@@ -9,4 +10,6 @@ class CookBookRepository(private val cookBookDao : CookBookDao)
     suspend fun insertCookBookData(cookBook : CookBook){
         cookBookDao.insertCookBookDetails(cookBook)
     }
+
+    val allDishesList: Flow<List<CookBook>> = cookBookDao.getAllDishesList()
 }

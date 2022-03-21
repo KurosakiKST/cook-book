@@ -1,8 +1,6 @@
 package com.kyawsithu.cookbook.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.kyawsithu.cookbook.model.database.CookBookRepository
 import com.kyawsithu.cookbook.model.entites.CookBook
 import kotlinx.coroutines.launch
@@ -12,6 +10,8 @@ class CookBookViewModel(private val repository: CookBookRepository): ViewModel()
     fun insert(dish: CookBook) = viewModelScope.launch {
         repository.insertCookBookData(dish)
     }
+
+    val allDishesList: LiveData<List<CookBook>> = repository.allDishesList.asLiveData()
 }
 
 class CookBookViewModelFactory(private val repository : CookBookRepository) : ViewModelProvider.Factory{
