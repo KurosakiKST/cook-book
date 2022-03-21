@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/navigation_all_dishes"
         android:name="com.kyawsithu.cookbook.view.fragments.AllDishesFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_all_dishes"
         tools:layout="@layout/fragment_all_dishes" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.kyawsithu.cookbook.view.fragments.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_favourite_dishes"
+        android:name="com.kyawsithu.cookbook.view.fragments.FavouriteDishesFragment"
+        android:label="@string/title_favourite_dishes"
+        tools:layout="@layout/fragment_favourite_dishes" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.kyawsithu.cookbook.view.fragments.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_random_dish"
+        android:name="com.kyawsithu.cookbook.view.fragments.RandomDishFragment"
+        android:label="@string/title_random_dish"
+        tools:layout="@layout/fragment_random_dish" />
 </navigation>
