@@ -9,6 +9,9 @@ import com.kyawsithu.cookbook.model.entites.CookBook
 @Database(entities = [CookBook::class], version = 1)
 abstract class CookBookRoomDatabase : RoomDatabase()
 {
+
+    abstract fun cookBookDao(): CookBookDao
+
     companion object
     {
         @Volatile
