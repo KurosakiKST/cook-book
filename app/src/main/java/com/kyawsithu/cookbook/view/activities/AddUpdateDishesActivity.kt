@@ -23,6 +23,7 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,9 +40,13 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import com.kyawsithu.application.CookBookApplication
 import com.kyawsithu.cookbook.databinding.DialogCustomListBinding
+import com.kyawsithu.cookbook.model.entites.CookBook
 import com.kyawsithu.cookbook.utils.Constants
 import com.kyawsithu.cookbook.view.adapters.CustomListItemAdapter
+import com.kyawsithu.cookbook.viewmodel.CookBookViewModel
+import com.kyawsithu.cookbook.viewmodel.CookBookViewModelFactory
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -54,6 +59,10 @@ class AddUpdateDishesActivity : AppCompatActivity(), View.OnClickListener
     private var mImagePath : String = ""
 
     private lateinit var mCustomListDialog : Dialog
+
+    private val mCookBookViewModel : CookBookViewModel by viewModels {
+        CookBookViewModelFactory((application as CookBookApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState : Bundle?)
     {
@@ -129,46 +138,78 @@ class AddUpdateDishesActivity : AppCompatActivity(), View.OnClickListener
                     val cookingDirection = addUpdateDishesBinding.etDirectionToCook.text.toString()
                             .trim { it <= ' ' }
 
-                    when{
-                        TextUtils.isEmpty(mImagePath) -> {
+                    when
+                    {
+                        TextUtils.isEmpty(mImagePath) ->
+                        {
                             Toast.makeText(this@AddUpdateDishesActivity,
-                                          resources.getString(R.string.err_msg_select_dish_image),
-                            Toast.LENGTH_SHORT).show()
+                                resources.getString(R.string.err_msg_select_dish_image),
+                                Toast.LENGTH_SHORT).show()
                         }
-                        TextUtils.isEmpty(title) -> {
+
+                        TextUtils.isEmpty(title) ->
+                        {
                             Toast.makeText(this@AddUpdateDishesActivity,
                                 resources.getString(R.string.err_msg_enter_dish_title),
                                 Toast.LENGTH_SHORT).show()
                         }
-                        TextUtils.isEmpty(type) -> {
+
+                        TextUtils.isEmpty(type) ->
+                        {
                             Toast.makeText(this@AddUpdateDishesActivity,
                                 resources.getString(R.string.err_msg_select_dish_type),
                                 Toast.LENGTH_SHORT).show()
                         }
-                        TextUtils.isEmpty(category) -> {
+
+                        TextUtils.isEmpty(category) ->
+                        {
                             Toast.makeText(this@AddUpdateDishesActivity,
                                 resources.getString(R.string.err_msg_select_dish_category),
                                 Toast.LENGTH_SHORT).show()
                         }
-                        TextUtils.isEmpty(ingredients) -> {
+
+                        TextUtils.isEmpty(ingredients) ->
+                        {
                             Toast.makeText(this@AddUpdateDishesActivity,
                                 resources.getString(R.string.err_msg_enter_dish_ingredients),
                                 Toast.LENGTH_SHORT).show()
                         }
-                        TextUtils.isEmpty(cookingTimeInMinutes) -> {
+
+                        TextUtils.isEmpty(cookingTimeInMinutes) ->
+                        {
                             Toast.makeText(this@AddUpdateDishesActivity,
                                 resources.getString(R.string.err_msg_select_dish_cooking_time),
                                 Toast.LENGTH_SHORT).show()
                         }
-                        TextUtils.isEmpty(cookingDirection) -> {
+
+                        TextUtils.isEmpty(cookingDirection) ->
+                        {
                             Toast.makeText(this@AddUpdateDishesActivity,
                                 resources.getString(R.string.err_msg_enter_dish_cooking_directions),
                                 Toast.LENGTH_SHORT).show()
                         }
-                        else -> {
+
+                        else ->
+                        {
+                            val cookBookDetails = CookBook(
+                                mImagePath,
+                                Constants.DISH_IMAGE_SOURCE_LOCAL,
+                                title,
+                                type,
+                                category,
+                                ingredients,
+                                cookingTimeInMinutes,
+                                cookingDirection,
+                                false
+                                                          )
+
+                            mCookBookViewModel.insert(cookBookDetails)
+
                             Toast.makeText(this@AddUpdateDishesActivity,
-                                "All entries are valid!",
+                                "Added Dish Successfully",
                                 Toast.LENGTH_SHORT).show()
+                            Log.i("DishInfo", cookBookDetails.toString())
+                            finish()
                         }
                     }
                 }
