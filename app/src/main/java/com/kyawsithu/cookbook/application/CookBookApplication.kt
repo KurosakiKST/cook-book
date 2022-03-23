@@ -1,4 +1,4 @@
-package com.kyawsithu.application
+package com.kyawsithu.cookbook.application
 
 import android.app.Application
 import com.kyawsithu.cookbook.model.database.CookBookRepository
