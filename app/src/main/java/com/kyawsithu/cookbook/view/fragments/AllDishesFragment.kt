@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.kyawsithu.application.CookBookApplication
+import com.kyawsithu.cookbook.application.CookBookApplication
 import com.kyawsithu.cookbook.R
 import com.kyawsithu.cookbook.databinding.FragmentAllDishesBinding
 import com.kyawsithu.cookbook.view.activities.AddUpdateDishesActivity

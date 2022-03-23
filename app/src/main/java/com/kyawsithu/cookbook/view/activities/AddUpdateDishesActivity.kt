@@ -40,7 +40,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
-import com.kyawsithu.application.CookBookApplication
+import com.kyawsithu.cookbook.application.CookBookApplication
 import com.kyawsithu.cookbook.databinding.DialogCustomListBinding
 import com.kyawsithu.cookbook.model.entites.CookBook
 import com.kyawsithu.cookbook.utils.Constants
