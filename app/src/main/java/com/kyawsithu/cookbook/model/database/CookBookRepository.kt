@@ -12,4 +12,9 @@ class CookBookRepository(private val cookBookDao : CookBookDao)
     }
 
     val allDishesList: Flow<List<CookBook>> = cookBookDao.getAllDishesList()
+
+    @WorkerThread
+    suspend fun updateCookBookData(cookBook : CookBook){
+        cookBookDao.updateCookBookDetails(cookBook)
+    }
 }

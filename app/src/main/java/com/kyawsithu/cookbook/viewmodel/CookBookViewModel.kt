@@ -12,6 +12,10 @@ class CookBookViewModel(private val repository: CookBookRepository): ViewModel()
     }
 
     val allDishesList: LiveData<List<CookBook>> = repository.allDishesList.asLiveData()
+
+    fun update(dish: CookBook) = viewModelScope.launch {
+        repository.updateCookBookData(dish)
+    }
 }
 
 class CookBookViewModelFactory(private val repository : CookBookRepository) : ViewModelProvider.Factory{

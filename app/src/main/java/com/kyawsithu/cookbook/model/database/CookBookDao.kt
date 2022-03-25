@@ -3,6 +3,7 @@ package com.kyawsithu.cookbook.model.database
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.kyawsithu.cookbook.model.entities.CookBook
 import kotlinx.coroutines.flow.Flow
 
@@ -14,5 +15,8 @@ interface CookBookDao {
 
     @Query("SELECT * FROM COOK_BOOK_TABLE ORDER BY ID")
     fun getAllDishesList(): Flow<List<CookBook>>
+
+    @Update
+    suspend fun updateCookBookDetails(cookBook: CookBook)
 
 }
