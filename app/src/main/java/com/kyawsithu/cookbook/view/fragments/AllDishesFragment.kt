@@ -15,6 +15,7 @@ import com.kyawsithu.cookbook.application.CookBookApplication
 import com.kyawsithu.cookbook.R
 import com.kyawsithu.cookbook.databinding.FragmentAllDishesBinding
 import com.kyawsithu.cookbook.view.activities.AddUpdateDishesActivity
+import com.kyawsithu.cookbook.view.activities.MainActivity
 import com.kyawsithu.cookbook.view.adapters.CookBookAdapter
 import com.kyawsithu.cookbook.viewmodel.CookBookViewModel
 import com.kyawsithu.cookbook.viewmodel.CookBookViewModelFactory
@@ -73,6 +74,17 @@ class AllDishesFragment : Fragment()
 
     fun dishDetails() {
         findNavController().navigate(AllDishesFragmentDirections.actionAllDishesToDishDetails())
+        if(requireActivity() is MainActivity){
+            (activity as MainActivity?)?.hideBottomNavigationView()
+        }
+    }
+
+    override fun onResume()
+    {
+        super.onResume()
+        if(requireActivity() is MainActivity){
+            (activity as MainActivity?)?.showBottomNavigationView()
+        }
     }
 
     override fun onCreateOptionsMenu(menu : Menu, inflater : MenuInflater)
