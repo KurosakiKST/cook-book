@@ -91,7 +91,7 @@ class AllDishesFragment : Fragment()
             mCookBookViewModel.delete(cookBook)
             dialogInterface.dismiss()
         }
-        builder.setNegativeButton(resources.getString(R.string.lbl_yes)) { dialogInterface, _ ->
+        builder.setNegativeButton(resources.getString(R.string.lbl_no)) { dialogInterface, _ ->
             dialogInterface.dismiss()
         }
 
