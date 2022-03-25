@@ -19,4 +19,9 @@ class CookBookRepository(private val cookBookDao : CookBookDao)
     }
 
     val favouriteDishes: Flow<List<CookBook>> = cookBookDao.getAllFavouriteDishesList()
+
+    @WorkerThread
+    suspend fun deleteCookBookData(cookBook : CookBook){
+        cookBookDao.deleteCookBookDetails(cookBook)
+    }
 }

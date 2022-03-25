@@ -1,5 +1,6 @@
 package com.kyawsithu.cookbook.view.fragments
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -54,12 +55,15 @@ class AllDishesFragment : Fragment()
 
         mCookBookViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
             dishes.let {
-                if(it.isNotEmpty()){
+                if (it.isNotEmpty())
+                {
                     mAllDishesBinding.rvDishesList.visibility = View.VISIBLE
                     mAllDishesBinding.tvNoDishesAddedYet.visibility = View.GONE
 
                     cookBookAdapter.dishesList(it)
-                }else{
+                }
+                else
+                {
                     mAllDishesBinding.rvDishesList.visibility = View.GONE
                     mAllDishesBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
 
@@ -68,17 +72,39 @@ class AllDishesFragment : Fragment()
         }
     }
 
-    fun dishDetails(cookBook: CookBook) {
+    fun dishDetails(cookBook : CookBook)
+    {
         findNavController().navigate(AllDishesFragmentDirections.actionAllDishesToDishDetails(cookBook))
-        if(requireActivity() is MainActivity){
+        if (requireActivity() is MainActivity)
+        {
             (activity as MainActivity?)?.hideBottomNavigationView()
         }
+    }
+
+    fun deleteDish(cookBook : CookBook)
+    {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setTitle(resources.getString(R.string.title_delete_dish))
+        builder.setMessage(resources.getString(R.string.msg_delete_dish_dialog, cookBook.title))
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.setPositiveButton(resources.getString(R.string.lbl_yes)) { dialogInterface, _ ->
+            mCookBookViewModel.delete(cookBook)
+            dialogInterface.dismiss()
+        }
+        builder.setNegativeButton(resources.getString(R.string.lbl_yes)) { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 
     override fun onResume()
     {
         super.onResume()
-        if(requireActivity() is MainActivity){
+        if (requireActivity() is MainActivity)
+        {
             (activity as MainActivity?)?.showBottomNavigationView()
         }
     }

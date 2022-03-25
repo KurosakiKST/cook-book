@@ -18,6 +18,10 @@ class CookBookViewModel(private val repository: CookBookRepository): ViewModel()
     }
 
     val favouriteDishes: LiveData<List<CookBook>> = repository.favouriteDishes.asLiveData()
+
+    fun delete(dish: CookBook) = viewModelScope.launch {
+        repository.deleteCookBookData(dish)
+    }
 }
 
 class CookBookViewModelFactory(private val repository : CookBookRepository) : ViewModelProvider.Factory{
