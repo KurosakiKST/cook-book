@@ -1,10 +1,15 @@
 package com.kyawsithu.cookbook.view.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.kyawsithu.cookbook.R
 import com.kyawsithu.cookbook.databinding.ItemDishLayoutBinding
 import com.kyawsithu.cookbook.model.entities.CookBook
 import com.kyawsithu.cookbook.view.fragments.AllDishesFragment
@@ -19,6 +24,7 @@ class CookBookAdapter(private val fragment : Fragment) : RecyclerView.Adapter<Co
     {
         val ivDishImage = view.ivDishImage
         val tvTitle = view.tvDishTitle
+        val ibMore = view.ibMore
     }
 
     override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : ViewHolder
@@ -42,6 +48,26 @@ class CookBookAdapter(private val fragment : Fragment) : RecyclerView.Adapter<Co
             if(fragment is FavouriteDishesFragment){
                 fragment.dishDetails(dish)
             }
+        }
+        holder.ibMore.setOnClickListener {
+            val popup = PopupMenu(fragment.context, holder.ibMore)
+            popup.menuInflater.inflate(R.menu.menu_adapter, popup.menu)
+
+            popup.setOnMenuItemClickListener {
+                if(it.itemId == R.id.action_edit_dish){
+                    Log.i("Menu", "Edit")
+                }else if(it.itemId == R.id.action_delete_dish){
+                    Log.i("Menu", "Delete")
+                }
+                true
+            }
+            popup.show()
+        }
+
+        if(fragment is AllDishesFragment){
+            holder.ibMore.visibility = View.VISIBLE
+        }else if(fragment is FavouriteDishesFragment){
+            holder.ibMore.visibility = View.GONE
         }
     }
 
