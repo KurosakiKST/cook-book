@@ -2,24 +2,20 @@ package com.kyawsithu.cookbook.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.GridLayout
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kyawsithu.cookbook.application.CookBookApplication
 import com.kyawsithu.cookbook.R
 import com.kyawsithu.cookbook.databinding.FragmentAllDishesBinding
+import com.kyawsithu.cookbook.model.entities.CookBook
 import com.kyawsithu.cookbook.view.activities.AddUpdateDishesActivity
 import com.kyawsithu.cookbook.view.activities.MainActivity
 import com.kyawsithu.cookbook.view.adapters.CookBookAdapter
 import com.kyawsithu.cookbook.viewmodel.CookBookViewModel
 import com.kyawsithu.cookbook.viewmodel.CookBookViewModelFactory
-import com.kyawsithu.cookbook.viewmodel.HomeViewModel
 
 class AllDishesFragment : Fragment()
 {
@@ -72,8 +68,8 @@ class AllDishesFragment : Fragment()
         }
     }
 
-    fun dishDetails() {
-        findNavController().navigate(AllDishesFragmentDirections.actionAllDishesToDishDetails())
+    fun dishDetails(cookBook: CookBook) {
+        findNavController().navigate(AllDishesFragmentDirections.actionAllDishesToDishDetails(cookBook))
         if(requireActivity() is MainActivity){
             (activity as MainActivity?)?.hideBottomNavigationView()
         }

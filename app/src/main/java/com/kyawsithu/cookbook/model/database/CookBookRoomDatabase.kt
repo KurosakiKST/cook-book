@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.kyawsithu.cookbook.model.entites.CookBook
+import com.kyawsithu.cookbook.model.entities.CookBook
 
 @Database(entities = [CookBook::class], version = 1)
 abstract class CookBookRoomDatabase : RoomDatabase()

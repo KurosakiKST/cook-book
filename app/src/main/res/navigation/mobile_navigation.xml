@@ -30,5 +30,10 @@
         android:id = "@+id/dishDetailsFragment"
         android:name = "com.kyawsithu.cookbook.view.fragments.DishDetailsFragment"
         android:label = "@string/title_dish_details"
-        tools:layout = "@layout/fragment_dish_details"/>
+        tools:layout = "@layout/fragment_dish_details">
+        <argument
+            android:name="dishDetails"
+            app:argType="com.kyawsithu.cookbook.model.entities.CookBook"
+            />
+    </fragment>
 </navigation>

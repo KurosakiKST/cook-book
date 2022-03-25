@@ -1,7 +1,7 @@
 package com.kyawsithu.cookbook.model.database
 
 import androidx.annotation.WorkerThread
-import com.kyawsithu.cookbook.model.entites.CookBook
+import com.kyawsithu.cookbook.model.entities.CookBook
 import kotlinx.coroutines.flow.Flow
 
 class CookBookRepository(private val cookBookDao : CookBookDao)

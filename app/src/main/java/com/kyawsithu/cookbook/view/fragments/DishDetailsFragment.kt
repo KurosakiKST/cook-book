@@ -1,10 +1,12 @@
 package com.kyawsithu.cookbook.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import com.kyawsithu.cookbook.R
 
 class DishDetailsFragment : Fragment()
@@ -20,6 +22,15 @@ class DishDetailsFragment : Fragment()
     {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dish_details, container, false)
+    }
+
+    override fun onViewCreated(view : View, savedInstanceState : Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
+        val args: DishDetailsFragmentArgs by navArgs()
+        Log.i("DishTitle", args.dishDetails.title)
+        Log.i("DishType", args.dishDetails.type)
+
     }
 
 }

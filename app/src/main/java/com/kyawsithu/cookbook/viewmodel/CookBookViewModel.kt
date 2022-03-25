@@ -2,7 +2,7 @@ package com.kyawsithu.cookbook.viewmodel
 
 import androidx.lifecycle.*
 import com.kyawsithu.cookbook.model.database.CookBookRepository
-import com.kyawsithu.cookbook.model.entites.CookBook
+import com.kyawsithu.cookbook.model.entities.CookBook
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
