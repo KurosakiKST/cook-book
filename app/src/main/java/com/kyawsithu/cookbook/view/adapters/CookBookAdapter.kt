@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.kyawsithu.cookbook.databinding.ItemDishLayoutBinding
 import com.kyawsithu.cookbook.model.entities.CookBook
 import com.kyawsithu.cookbook.view.fragments.AllDishesFragment
+import com.kyawsithu.cookbook.view.fragments.FavouriteDishesFragment
 
 class CookBookAdapter(private val fragment : Fragment) : RecyclerView.Adapter<CookBookAdapter.ViewHolder>()
 {
@@ -36,6 +37,9 @@ class CookBookAdapter(private val fragment : Fragment) : RecyclerView.Adapter<Co
         holder.tvTitle.text = dish.title
         holder.itemView.setOnClickListener {
             if(fragment is AllDishesFragment){
+                fragment.dishDetails(dish)
+            }
+            if(fragment is FavouriteDishesFragment){
                 fragment.dishDetails(dish)
             }
         }
