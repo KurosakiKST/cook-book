@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kyawsithu.cookbook.databinding.ItemDishLayoutBinding
 import com.kyawsithu.cookbook.model.entites.CookBook
+import com.kyawsithu.cookbook.view.fragments.AllDishesFragment
 
 class CookBookAdapter(private val fragment : Fragment) : RecyclerView.Adapter<CookBookAdapter.ViewHolder>()
 {
@@ -33,6 +34,11 @@ class CookBookAdapter(private val fragment : Fragment) : RecyclerView.Adapter<Co
                 .load(dish.image)
                 .into(holder.ivDishImage)
         holder.tvTitle.text = dish.title
+        holder.itemView.setOnClickListener {
+            if(fragment is AllDishesFragment){
+                fragment.dishDetails()
+            }
+        }
     }
 
     override fun getItemCount() : Int
