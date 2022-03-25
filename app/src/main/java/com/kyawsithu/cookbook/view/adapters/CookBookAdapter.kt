@@ -1,5 +1,6 @@
 package com.kyawsithu.cookbook.view.adapters
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import com.bumptech.glide.Glide
 import com.kyawsithu.cookbook.R
 import com.kyawsithu.cookbook.databinding.ItemDishLayoutBinding
 import com.kyawsithu.cookbook.model.entities.CookBook
+import com.kyawsithu.cookbook.utils.Constants
+import com.kyawsithu.cookbook.view.activities.AddUpdateDishesActivity
 import com.kyawsithu.cookbook.view.fragments.AllDishesFragment
 import com.kyawsithu.cookbook.view.fragments.FavouriteDishesFragment
 
@@ -55,7 +58,10 @@ class CookBookAdapter(private val fragment : Fragment) : RecyclerView.Adapter<Co
 
             popup.setOnMenuItemClickListener {
                 if(it.itemId == R.id.action_edit_dish){
-                    Log.i("Menu", "Edit")
+                    val intent = Intent(fragment.requireActivity(), AddUpdateDishesActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_DISH_DETAILS, dish)
+                    fragment.requireActivity().startActivity(intent)
+
                 }else if(it.itemId == R.id.action_delete_dish){
                     Log.i("Menu", "Delete")
                 }
