@@ -17,4 +17,6 @@ class CookBookRepository(private val cookBookDao : CookBookDao)
     suspend fun updateCookBookData(cookBook : CookBook){
         cookBookDao.updateCookBookDetails(cookBook)
     }
+
+    val favouriteDishes: Flow<List<CookBook>> = cookBookDao.getAllFavouriteDishesList()
 }

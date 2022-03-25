@@ -19,4 +19,7 @@ interface CookBookDao {
     @Update
     suspend fun updateCookBookDetails(cookBook: CookBook)
 
+    @Query("SELECT * FROM COOK_BOOK_TABLE WHERE favourite_dish = 1")
+    fun getAllFavouriteDishesList(): Flow<List<CookBook>>
+
 }
