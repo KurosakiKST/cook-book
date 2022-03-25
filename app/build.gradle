@@ -64,6 +64,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
+    //palette
+    implementation 'androidx.palette:palette-ktx:1.0.0'
+
     //Room
     def room_version = '2.4.2'
     implementation "androidx.room:room-ktx:$room_version"
