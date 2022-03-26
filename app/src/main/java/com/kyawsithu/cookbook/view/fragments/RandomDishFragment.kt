@@ -9,11 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.kyawsithu.cookbook.R
+import com.kyawsithu.cookbook.application.CookBookApplication
 import com.kyawsithu.cookbook.databinding.FragmentRandomDishBinding
+import com.kyawsithu.cookbook.model.entities.CookBook
 import com.kyawsithu.cookbook.model.entities.RandomDish
+import com.kyawsithu.cookbook.utils.Constants
+import com.kyawsithu.cookbook.viewmodel.CookBookViewModel
+import com.kyawsithu.cookbook.viewmodel.CookBookViewModelFactory
 import com.kyawsithu.cookbook.viewmodel.NotificationsViewModel
 import com.kyawsithu.cookbook.viewmodel.RandomDishViewModel
 
@@ -112,11 +118,33 @@ class RandomDishFragment : Fragment()
             binding !!.tvCookingDirection.text = Html.fromHtml(recipe.instructions)
         }
 
-        binding !!.tvCookingTime.text =
+        binding!!.tvCookingTime.text =
                 resources.getString(
                     R.string.lbl_estimate_cooking_time,
                     recipe.readyInMinutes.toString()
                                    )
+
+        binding!!.ivFavoriteDish.setOnClickListener {
+            val randomDishDetails = CookBook(
+                recipe.image,
+                Constants.DISH_IMAGE_SOURCE_ONLINE,
+                recipe.title,
+                dishType,
+                "Other",
+                ingredients,
+                recipe.readyInMinutes.toString(),
+                recipe.instructions,
+                true
+                                            )
+            val mCookBookViewModel: CookBookViewModel by viewModels{
+                CookBookViewModelFactory((requireActivity().application as CookBookApplication).repository)
+            }
+            mCookBookViewModel.insert(randomDishDetails)
+        }
+
+        val mCookBookView: CookBookViewModel by viewModels{
+            CookBookViewModelFactory((requireActivity().application as CookBookApplication).repository)
+        }
 
     }
 
