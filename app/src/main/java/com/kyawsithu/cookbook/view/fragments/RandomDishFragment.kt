@@ -1,5 +1,6 @@
 package com.kyawsithu.cookbook.view.fragments
 
+import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -8,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -30,6 +33,8 @@ class RandomDishFragment : Fragment()
 
     private lateinit var mRandomDishViewModel : RandomDishViewModel
 
+    private var mProgressDialog: Dialog? = null
+
     override fun onCreateView(
             inflater : LayoutInflater,
             container : ViewGroup?,
@@ -40,6 +45,20 @@ class RandomDishFragment : Fragment()
         return binding !!.root
     }
 
+    private fun showCustomProgressDialog(){
+        mProgressDialog = Dialog(requireActivity())
+        mProgressDialog?.let {
+            it.setContentView(R.layout.dialog_custom_progress)
+            it.show()
+        }
+    }
+
+    private fun hideCustomProgressDialog(){
+        mProgressDialog?.let {
+            it.dismiss()
+        }
+    }
+
     override fun onViewCreated(view : View, savedInstanceState : Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
@@ -48,6 +67,10 @@ class RandomDishFragment : Fragment()
         mRandomDishViewModel.getRandomRecipeFromAPI()
 
         randomDishViewModelObserver()
+
+        binding !!.srlRandomDish.setOnRefreshListener {
+            mRandomDishViewModel.getRandomRecipeFromAPI()
+        }
     }
 
     private fun randomDishViewModelObserver()
@@ -56,19 +79,34 @@ class RandomDishFragment : Fragment()
                                                        ) { randomDishResponse ->
             randomDishResponse?.let {
                 Log.i("Random Dish", "$randomDishResponse.recipes[0]")
+
+                if(binding!!.srlRandomDish.isRefreshing){
+                    binding!!.srlRandomDish.isRefreshing = false
+                }
+
                 setRandomDishResponseInUI(randomDishResponse.recipes[0])
             }
         }
         mRandomDishViewModel.randomDishLoadingError.observe(viewLifecycleOwner
                                                            ) { dataError ->
             dataError?.let {
-                Log.i("Random Dish Error", "$dataError")
+                Log.e("Random Dish Error", "$dataError")
+
+                if(binding!!.srlRandomDish.isRefreshing){
+                    binding!!.srlRandomDish.isRefreshing = false
+                }
             }
         }
 
         mRandomDishViewModel.loadRandomDish.observe(viewLifecycleOwner) { loadRandomDish ->
             loadRandomDish?.let {
                 Log.i("Random dish loading", "$loadRandomDish")
+
+                if(loadRandomDish && !binding!!.srlRandomDish.isRefreshing){
+                    showCustomProgressDialog()
+                }else{
+                    hideCustomProgressDialog()
+                }
             }
         }
 
@@ -118,31 +156,64 @@ class RandomDishFragment : Fragment()
             binding !!.tvCookingDirection.text = Html.fromHtml(recipe.instructions)
         }
 
-        binding!!.tvCookingTime.text =
+        binding !!.ivFavoriteDish.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireActivity(),
+                R.drawable.ic_favorite_unselected
+                                     )
+                                                  )
+
+        var addedToFavourites = false
+
+        binding !!.tvCookingTime.text =
                 resources.getString(
                     R.string.lbl_estimate_cooking_time,
                     recipe.readyInMinutes.toString()
                                    )
 
-        binding!!.ivFavoriteDish.setOnClickListener {
-            val randomDishDetails = CookBook(
-                recipe.image,
-                Constants.DISH_IMAGE_SOURCE_ONLINE,
-                recipe.title,
-                dishType,
-                "Other",
-                ingredients,
-                recipe.readyInMinutes.toString(),
-                recipe.instructions,
-                true
-                                            )
-            val mCookBookViewModel: CookBookViewModel by viewModels{
-                CookBookViewModelFactory((requireActivity().application as CookBookApplication).repository)
+        binding !!.ivFavoriteDish.setOnClickListener {
+
+            if (addedToFavourites)
+            {
+                Toast.makeText(requireActivity(),
+                    resources.getString(R.string.msg_already_added_to_favourites),
+                    Toast.LENGTH_SHORT).show()
             }
-            mCookBookViewModel.insert(randomDishDetails)
+            else
+            {
+                val randomDishDetails = CookBook(
+                    recipe.image,
+                    Constants.DISH_IMAGE_SOURCE_ONLINE,
+                    recipe.title,
+                    dishType,
+                    "Other",
+                    ingredients,
+                    recipe.readyInMinutes.toString(),
+                    recipe.instructions,
+                    true
+                                                )
+
+                val mCookBookViewModel : CookBookViewModel by viewModels {
+                    CookBookViewModelFactory((requireActivity().application as CookBookApplication).repository)
+                }
+                mCookBookViewModel.insert(randomDishDetails)
+
+                addedToFavourites = true
+
+                binding !!.ivFavoriteDish.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireActivity(),
+                        R.drawable.ic_favorite_selected
+                                             )
+                                                          )
+                Toast.makeText(requireActivity(),
+                    resources.getString(R.string.msg_added_to_favourites),
+                    Toast.LENGTH_SHORT).show()
+            }
+
         }
 
-        val mCookBookView: CookBookViewModel by viewModels{
+        val mCookBookView : CookBookViewModel by viewModels {
             CookBookViewModelFactory((requireActivity().application as CookBookApplication).repository)
         }
 
