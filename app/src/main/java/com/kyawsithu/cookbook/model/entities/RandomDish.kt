@@ -20,6 +20,7 @@ object RandomDish
             val glutenFree : Boolean,
             val healthScore : Double,
             val id : Int,
+            val image: String,
             val instructions : String,
             val license : String,
             val lowFodmap : Boolean,
