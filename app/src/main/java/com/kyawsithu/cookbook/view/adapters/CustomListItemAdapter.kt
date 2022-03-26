@@ -3,12 +3,15 @@ package com.kyawsithu.cookbook.view.adapters
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.kyawsithu.cookbook.databinding.ItemCustomListBinding
 import com.kyawsithu.cookbook.view.activities.AddUpdateDishesActivity
+import com.kyawsithu.cookbook.view.fragments.AllDishesFragment
 
 class CustomListItemAdapter(
         private val activity : Activity,
+        private val fragment : Fragment?,
         private val listItems : List<String>,
         private val selection : String)
     : RecyclerView.Adapter<CustomListItemAdapter.ViewHolder>()
@@ -34,7 +37,11 @@ class CustomListItemAdapter(
             if(activity is AddUpdateDishesActivity){
                 activity.selectedListItem(item, selection)
             }
+            if(fragment is AllDishesFragment){
+                fragment.filterSelection(item)
+            }
         }
+
 
     }
 

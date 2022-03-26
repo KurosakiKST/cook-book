@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,10 +26,11 @@ import com.kyawsithu.cookbook.viewmodel.CookBookViewModelFactory
 
 class AllDishesFragment : Fragment()
 {
+    private lateinit var binding : FragmentAllDishesBinding
 
-    private var allDishesBinding : FragmentAllDishesBinding? = null
+    private lateinit var cookBookAdapter : CookBookAdapter
 
-    private lateinit var mAllDishesBinding : FragmentAllDishesBinding
+    private lateinit var customListDialog : Dialog
 
     private val mCookBookViewModel : CookBookViewModel by viewModels {
         CookBookViewModelFactory((requireActivity().application as CookBookApplication).repository)
@@ -45,32 +47,31 @@ class AllDishesFragment : Fragment()
             container : ViewGroup?,
             savedInstanceState : Bundle?) : View?
     {
-        mAllDishesBinding = FragmentAllDishesBinding.inflate(inflater, container, false)
-        return mAllDishesBinding.root
+        binding = FragmentAllDishesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view : View, savedInstanceState : Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
 
-        mAllDishesBinding.rvDishesList.layoutManager = GridLayoutManager(requireActivity(), 2)
-        val cookBookAdapter = CookBookAdapter(this@AllDishesFragment)
-
-        mAllDishesBinding.rvDishesList.adapter = cookBookAdapter
+        binding.rvDishesList.layoutManager = GridLayoutManager(requireActivity(), 2)
+        cookBookAdapter = CookBookAdapter(this@AllDishesFragment)
+        binding.rvDishesList.adapter = cookBookAdapter
 
         mCookBookViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
             dishes.let {
                 if (it.isNotEmpty())
                 {
-                    mAllDishesBinding.rvDishesList.visibility = View.VISIBLE
-                    mAllDishesBinding.tvNoDishesAddedYet.visibility = View.GONE
+                    binding.rvDishesList.visibility = View.VISIBLE
+                    binding.tvNoDishesAddedYet.visibility = View.GONE
 
                     cookBookAdapter.dishesList(it)
                 }
                 else
                 {
-                    mAllDishesBinding.rvDishesList.visibility = View.GONE
-                    mAllDishesBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
+                    binding.rvDishesList.visibility = View.GONE
+                    binding.tvNoDishesAddedYet.visibility = View.VISIBLE
 
                 }
             }
@@ -100,14 +101,15 @@ class AllDishesFragment : Fragment()
             dialogInterface.dismiss()
         }
 
-        val alertDialog: AlertDialog = builder.create()
+        val alertDialog : AlertDialog = builder.create()
         alertDialog.setCancelable(false)
         alertDialog.show()
     }
 
-    private fun filterDishesListDialog(){
-        val customListDialog = Dialog(requireActivity())
-        val binding: DialogCustomListBinding = DialogCustomListBinding.inflate(layoutInflater)
+    private fun filterDishesListDialog()
+    {
+        customListDialog = Dialog(requireActivity())
+        val binding : DialogCustomListBinding = DialogCustomListBinding.inflate(layoutInflater)
 
         customListDialog.setContentView(binding.root)
         binding.tvTitle.text = resources.getString(R.string.title_select_item_to_filter)
@@ -115,7 +117,7 @@ class AllDishesFragment : Fragment()
         dishTypes.add(0, Constants.ALL_ITEMS)
 
         binding.rvList.layoutManager = LinearLayoutManager(requireActivity())
-        val adapter = CustomListItemAdapter(requireActivity(), dishTypes, Constants.FILTER_SELECTION)
+        val adapter = CustomListItemAdapter(requireActivity(), this@AllDishesFragment, dishTypes, Constants.FILTER_SELECTION)
         binding.rvList.adapter = adapter
         customListDialog.show()
     }
@@ -144,7 +146,9 @@ class AllDishesFragment : Fragment()
                 startActivity(Intent(requireActivity(), AddUpdateDishesActivity::class.java))
                 return true
             }
-            R.id.action_filter_dishes ->{
+
+            R.id.action_filter_dishes ->
+            {
                 filterDishesListDialog()
                 return true
             }
@@ -152,9 +156,34 @@ class AllDishesFragment : Fragment()
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onDestroyView()
+    fun filterSelection(filterItemSelection : String)
     {
-        super.onDestroyView()
-        allDishesBinding = null
+        customListDialog.dismiss()
+        Log.i("Selected", filterItemSelection)
+
+        if (filterItemSelection == Constants.ALL_ITEMS)
+        {
+            mCookBookViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
+                dishes.let {
+                    if (it.isNotEmpty())
+                    {
+                        binding.rvDishesList.visibility = View.VISIBLE
+                        binding.tvNoDishesAddedYet.visibility = View.GONE
+
+                        cookBookAdapter.dishesList(it)
+                    }
+                    else
+                    {
+                        binding.rvDishesList.visibility = View.GONE
+                        binding.tvNoDishesAddedYet.visibility = View.VISIBLE
+
+                    }
+                }
+            }
+        }
+        else
+        {
+            Log.i("FilteredList", "Get Filter List")
+        }
     }
 }
