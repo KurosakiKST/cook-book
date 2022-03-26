@@ -11,6 +11,9 @@ object Constants
 
     const val EXTRA_DISH_DETAILS: String = "DishDetails"
 
+    const val ALL_ITEMS: String = "All"
+    const val FILTER_SELECTION: String = "FilterSelection"
+
     fun dishType():ArrayList<String>{
         var list = ArrayList<String>()
         list.add("breakfast")
