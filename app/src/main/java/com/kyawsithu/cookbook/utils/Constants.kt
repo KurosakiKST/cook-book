@@ -21,6 +21,13 @@ object Constants
     const val TAGS: String = "tags"
     const val NUMBER: String = "number"
 
+    const val BASE_URL: String = "https:api.spoonacular.com"
+    
+    const val API_KEY_VALUE: String = "9a18922c75a2403eaf296a389b751051"
+    const val LIMIT_LICENSE_VALUE: Boolean = true
+    const val TAGS_VALUE: String = "vegetarian, dessert"
+    const val NUMBER_VALUE: Int = 1
+
 
     fun dishType():ArrayList<String>{
         var list = ArrayList<String>()
