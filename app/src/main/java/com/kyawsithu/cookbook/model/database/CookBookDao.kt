@@ -22,4 +22,7 @@ interface CookBookDao {
     @Delete
     suspend fun deleteCookBookDetails(cookBook : CookBook)
 
+    @Query("SELECT * FROM COOK_BOOK_TABLE WHERE type = :filterType")
+    fun getFilteredDishesList(filterType: String): Flow<List<CookBook>>
+
 }

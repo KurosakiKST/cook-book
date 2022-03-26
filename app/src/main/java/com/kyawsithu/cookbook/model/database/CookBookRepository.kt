@@ -24,4 +24,7 @@ class CookBookRepository(private val cookBookDao : CookBookDao)
     suspend fun deleteCookBookData(cookBook : CookBook){
         cookBookDao.deleteCookBookDetails(cookBook)
     }
+
+    fun filteredDishesList(value: String): Flow<List<CookBook>> =
+            cookBookDao.getFilteredDishesList(value)
 }

@@ -22,6 +22,9 @@ class CookBookViewModel(private val repository: CookBookRepository): ViewModel()
     fun delete(dish: CookBook) = viewModelScope.launch {
         repository.deleteCookBookData(dish)
     }
+
+    fun getFilteredList(value: String): LiveData<List<CookBook>> =
+            repository.filteredDishesList(value).asLiveData()
 }
 
 class CookBookViewModelFactory(private val repository : CookBookRepository) : ViewModelProvider.Factory{

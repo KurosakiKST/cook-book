@@ -72,7 +72,6 @@ class AllDishesFragment : Fragment()
                 {
                     binding.rvDishesList.visibility = View.GONE
                     binding.tvNoDishesAddedYet.visibility = View.VISIBLE
-
                 }
             }
         }
@@ -176,14 +175,29 @@ class AllDishesFragment : Fragment()
                     {
                         binding.rvDishesList.visibility = View.GONE
                         binding.tvNoDishesAddedYet.visibility = View.VISIBLE
-
                     }
                 }
             }
         }
         else
         {
-            Log.i("FilteredList", "Get Filter List")
+            mCookBookViewModel.getFilteredList(filterItemSelection).observe(viewLifecycleOwner){
+                    dishes ->
+                dishes.let {
+                    if (it.isNotEmpty())
+                    {
+                        binding.rvDishesList.visibility = View.VISIBLE
+                        binding.tvNoDishesAddedYet.visibility = View.GONE
+
+                        cookBookAdapter.dishesList(it)
+                    }
+                    else
+                    {
+                        binding.rvDishesList.visibility = View.GONE
+                        binding.tvNoDishesAddedYet.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
     }
 }
