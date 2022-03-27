@@ -158,7 +158,17 @@ class DishDetailsFragment : Fragment()
             binding !!.tvType.text = it.dishDetails.type.capitalize(Locale.ROOT)
             binding !!.tvCategory.text = it.dishDetails.category
             binding !!.tvIngredients.text = it.dishDetails.ingredients
-            binding !!.tvCookingDirection.text = it.dishDetails.directionToCook
+            //binding !!.tvCookingDirection.text = it.dishDetails.directionToCook
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                binding!!.tvCookingDirection.text = Html.fromHtml(
+                    it.dishDetails.directionToCook,
+                    Html.FROM_HTML_MODE_COMPACT
+                                                   )
+            }else{
+                @Suppress("DEPRECATION")
+                binding!!.tvCookingDirection.text = Html.fromHtml(it.dishDetails.directionToCook).toString()
+            }
 
             binding !!.tvCookingTime.text = resources.getString(R.string.lbl_estimate_cooking_time,
                 it.dishDetails.cookingTime)
