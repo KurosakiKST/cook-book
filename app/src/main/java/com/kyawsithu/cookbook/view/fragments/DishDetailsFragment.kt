@@ -167,7 +167,7 @@ class DishDetailsFragment : Fragment()
                                                    )
             }else{
                 @Suppress("DEPRECATION")
-                binding!!.tvCookingDirection.text = Html.fromHtml(it.dishDetails.directionToCook).toString()
+                binding!!.tvCookingDirection.text = Html.fromHtml(it.dishDetails.directionToCook)
             }
 
             binding !!.tvCookingTime.text = resources.getString(R.string.lbl_estimate_cooking_time,
