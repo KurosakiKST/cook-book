@@ -28,6 +28,10 @@ object Constants
     const val TAGS_VALUE: String = "vegetarian, dessert"
     const val NUMBER_VALUE: Int = 1
 
+    const val NOTIFICATION_ID: String = "CookBook_notification_id"
+    const val NOTIFICATION_NAME: String = "CookBook"
+    const val NOTIFICATION_CHANNEL: String = "CookBook_channel_01"
+
 
     fun dishType():ArrayList<String>{
         var list = ArrayList<String>()
