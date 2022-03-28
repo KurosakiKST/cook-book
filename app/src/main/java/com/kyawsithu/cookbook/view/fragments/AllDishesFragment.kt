@@ -65,7 +65,6 @@ class AllDishesFragment : Fragment()
                 {
                     binding.rvDishesList.visibility = View.VISIBLE
                     binding.tvNoDishesAddedYet.visibility = View.GONE
-
                     cookBookAdapter.dishesList(it)
                 }
                 else
